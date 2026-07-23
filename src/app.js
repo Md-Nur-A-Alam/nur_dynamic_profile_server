@@ -26,8 +26,17 @@ app.use(express.urlencoded({ extended: true }));
 // Better Auth Route Handler (must be bound before other routes that might conflict)
 app.use("/api/auth", authLimiter, toNodeHandler(auth));
 
+const portfolioRoutes = require('./routes/portfolioRoutes');
+const socialRoutes = require('./routes/socialRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
+
 // Apply general rate limiter to all API routes
 app.use('/api', generalLimiter);
+
+// App Routes
+app.use('/api/portfolio', portfolioRoutes);
+app.use('/api/social', socialRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Setup generic test route
 app.get('/', (req, res) => {

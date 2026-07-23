@@ -23,9 +23,7 @@ const commentsLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   validate: { trustProxy: false, xForwardedForHeader: false, keyGeneratorIpFallback: false },
-  keyGenerator: (req, res) => {
-    return req.user?.id || req.ip;
-  }
+  keyGenerator: (req, res) => req.user.id
 });
 
 const reactionsLimiter = rateLimit({
@@ -35,9 +33,7 @@ const reactionsLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   validate: { trustProxy: false, xForwardedForHeader: false, keyGeneratorIpFallback: false },
-  keyGenerator: (req, res) => {
-    return req.user?.id || req.ip;
-  }
+  keyGenerator: (req, res) => req.user.id
 });
 
 module.exports = {
