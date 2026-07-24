@@ -16,9 +16,15 @@ app.use(morgan('dev'));
 // CORS config (allow client app)
 app.use(cors({
   origin: function (origin, callback) {
-    const allowedOrigins = [process.env.CLIENT_BASE_URL, 'http://localhost:3000'];
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
+    const allowedOrigins = [
+      process.env.CLIENT_BASE_URL, 
+      'http://localhost:3000',
+      'https://nur-dynamic-profile-client-beta.vercel.app'
+    ].filter(Boolean);
+    
+    // Allow if origin is in the list, or if it's a vercel preview deployment
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+      callback(null, origin || true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
