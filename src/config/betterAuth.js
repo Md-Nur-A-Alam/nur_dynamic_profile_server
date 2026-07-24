@@ -13,6 +13,7 @@ const resolveRole = (email) => {
 const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET,
   baseURL: process.env.SERVER_BASE_URL,
+  trustedOrigins: [process.env.CLIENT_BASE_URL],
   database: mongodbAdapter(db),
   emailAndPassword: {
     enabled: true,

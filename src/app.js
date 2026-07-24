@@ -23,6 +23,17 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const { ADMIN_EMAILS } = require('./config/constants');
+
+// Prevent admin emails from registering via the public email/password path
+app.post('/api/auth/sign-up/email', (req, res, next) => {
+  const email = req.body?.email;
+  if (email && ADMIN_EMAILS.includes(email)) {
+    return res.status(403).json({ message: "Admin accounts cannot be created via public registration." });
+  }
+  next();
+});
+
 // Better Auth Route Handler (must be bound before other routes that might conflict)
 app.use("/api/auth", authLimiter, toNodeHandler(auth));
 
