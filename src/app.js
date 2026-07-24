@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const { toNodeHandler } = require('better-auth/node');
+
 const auth = require('./config/betterAuth');
 const { generalLimiter, authLimiter } = require('./middlewares/rateLimiter');
 
@@ -48,7 +48,14 @@ app.post('/api/auth/sign-up/email', (req, res, next) => {
 });
 
 // Better Auth Route Handler (must be bound before other routes that might conflict)
-app.use("/api/auth", authLimiter, toNodeHandler(auth));
+app.use("/api/auth", authLimiter, async (req, res, next) => {
+  try {
+    const { toNodeHandler } = await import('better-auth/node');
+    return toNodeHandler(auth)(req, res, next);
+  } catch (err) {
+    next(err);
+  }
+});
 
 const portfolioRoutes = require('./routes/portfolioRoutes');
 const socialRoutes = require('./routes/socialRoutes');
