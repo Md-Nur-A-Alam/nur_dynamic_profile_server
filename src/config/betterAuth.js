@@ -41,6 +41,12 @@ const getAuth = async () => {
         profileImage: { type: "string", required: false }
       }
     },
+    advanced: {
+      defaultCookieAttributes: {
+        sameSite: "none",
+        secure: true
+      }
+    },
     databaseHooks: {
       user: {
         create: {
