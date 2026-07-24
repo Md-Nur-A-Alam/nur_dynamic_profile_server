@@ -61,6 +61,7 @@ app.use("/api/auth", async (req, res, next) => {
 const portfolioRoutes = require('./routes/portfolioRoutes');
 const socialRoutes = require('./routes/socialRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 // Rate limiting disabled for now
 
@@ -68,6 +69,7 @@ const uploadRoutes = require('./routes/uploadRoutes');
 app.use('/api/portfolio', portfolioRoutes);
 app.use('/api/social', socialRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/user', userRoutes);
 
 // Setup generic test route
 app.get('/', (req, res) => {
