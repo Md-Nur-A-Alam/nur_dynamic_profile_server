@@ -4,8 +4,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
-const auth = require('./config/betterAuth');
-const { generalLimiter, authLimiter } = require('./middlewares/rateLimiter');
+const getAuth = require('./config/betterAuth');
+
 
 const app = express();
 
@@ -48,9 +48,10 @@ app.post('/api/auth/sign-up/email', (req, res, next) => {
 });
 
 // Better Auth Route Handler (must be bound before other routes that might conflict)
-app.use("/api/auth", authLimiter, async (req, res, next) => {
+app.use("/api/auth", async (req, res, next) => {
   try {
     const { toNodeHandler } = await import('better-auth/node');
+    const auth = await getAuth();
     return toNodeHandler(auth)(req, res, next);
   } catch (err) {
     next(err);
@@ -61,8 +62,7 @@ const portfolioRoutes = require('./routes/portfolioRoutes');
 const socialRoutes = require('./routes/socialRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 
-// Apply general rate limiter to all API routes
-app.use('/api', generalLimiter);
+// Rate limiting disabled for now
 
 // App Routes
 app.use('/api/portfolio', portfolioRoutes);

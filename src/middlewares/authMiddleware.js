@@ -1,9 +1,10 @@
-const auth = require('../config/betterAuth');
+const getAuth = require('../config/betterAuth');
 
 
 const requireAuth = async (req, res, next) => {
   try {
     const { fromNodeHeaders } = await import('better-auth/node');
+    const auth = await getAuth();
     const session = await auth.api.getSession({
       headers: fromNodeHeaders(req.headers)
     });
@@ -22,6 +23,7 @@ const requireAuth = async (req, res, next) => {
 const requireAdmin = async (req, res, next) => {
   try {
     const { fromNodeHeaders } = await import('better-auth/node');
+    const auth = await getAuth();
     const session = await auth.api.getSession({
       headers: fromNodeHeaders(req.headers)
     });
