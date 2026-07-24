@@ -23,6 +23,7 @@ const requireAdmin = async (req, res, next) => {
     const session = await auth.api.getSession({
       headers: fromNodeHeaders(req.headers)
     });
+    
     if (!session || !session.user || session.user.role !== 'admin') {
       return res.status(403).json({ message: "Forbidden: Admin access required." });
     }
