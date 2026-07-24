@@ -5,39 +5,54 @@ const genericValidator = Joi.object().unknown(true);
 
 const specificValidators = {
   personalDetails: Joi.object({
-    firstName: Joi.string().required(),
-    lastName: Joi.string().required(),
+    fullNameBangla: Joi.string().allow(null, ''),
     dateOfBirth: Joi.string().allow(null, ''),
+    placeOfBirth: Joi.string().allow(null, ''),
+    critical_credential: Joi.array().items(Joi.object({
+      birthRegistrationNumber: Joi.string().allow(null, ''),
+      nationalId: Joi.string().allow(null, ''),
+      passportNumber: Joi.string().allow(null, ''),
+      visibility: Joi.string().valid('public', 'private').default('private')
+    })),
     nationality: Joi.string().allow(null, ''),
-    gender: Joi.string().allow(null, ''),
+    religion: Joi.string().allow(null, ''),
+    bloodGroup: Joi.string().allow(null, ''),
     maritalStatus: Joi.string().allow(null, ''),
-    languages: Joi.array().items(Joi.string()),
-    bio: Joi.string().allow(null, '')
-  }).unknown(true),
+    homeDistrict: Joi.string().allow(null, ''),
+    visibility: Joi.string().valid('public', 'private').default('public')
+  }),
 
   academicReferences: Joi.object({
     name: Joi.string().required(),
-    title: Joi.string().allow(null, ''),
-    institution: Joi.string().required(),
-    email: Joi.string().email().required(),
+    designation: Joi.string().allow(null, ''),
     phone: Joi.string().allow(null, ''),
-    relationship: Joi.string().allow(null, '')
-  }).unknown(true),
+    email: Joi.string().email().allow(null, ''),
+    priority: Joi.number().allow(null),
+    visibility: Joi.string().valid('public', 'private').default('public')
+  }),
 
   applications: Joi.object({
-    company: Joi.string().required(),
-    role: Joi.string().required(),
-    status: Joi.string().valid('applied', 'interviewing', 'offered', 'rejected', 'accepted').required(),
-    dateApplied: Joi.date().allow(null, ''),
-    notes: Joi.string().allow(null, '')
-  }).unknown(true),
+    institution: Joi.string().required(),
+    postAppliedFor: Joi.string().required(),
+    jobCircularRef: Joi.string().allow(null, ''),
+    circularDate: Joi.string().allow(null, ''),
+    declarationDate: Joi.string().allow(null, ''),
+    visibility: Joi.string().valid('public', 'private').default('public')
+  }),
 
   documents: Joi.object({
     title: Joi.string().required(),
-    type: Joi.string().required(),
+    type: Joi.string().allow(null, ''),
     url: Joi.string().uri().required(),
-    isPrivate: Joi.boolean().default(false)
-  }).unknown(true)
+    source: Joi.string().allow(null, ''),
+    publicId: Joi.string().allow(null, ''),
+    resourceType: Joi.string().allow(null, ''),
+    folder: Joi.string().allow(null, ''),
+    accessMode: Joi.string().allow(null, ''),
+    issuedBy: Joi.string().allow(null, ''),
+    issuedDate: Joi.string().allow(null, ''),
+    visibility: Joi.string().valid('public', 'private').default('public')
+  })
 };
 
 const getCollectionModel = (collectionName) => {
