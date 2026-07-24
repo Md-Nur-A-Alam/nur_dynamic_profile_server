@@ -2,7 +2,7 @@ const request = require('http');
 
 const options = {
   hostname: 'localhost',
-  port: 8000,
+  port: process.env.PORT || 8000,
   path: '/api/portfolio/skills',
   method: 'GET',
 };

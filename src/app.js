@@ -15,7 +15,14 @@ app.use(morgan('dev'));
 
 // CORS config (allow client app)
 app.use(cors({
-  origin: process.env.CLIENT_BASE_URL,
+  origin: function (origin, callback) {
+    const allowedOrigins = [process.env.CLIENT_BASE_URL, 'http://localhost:3000'];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 
