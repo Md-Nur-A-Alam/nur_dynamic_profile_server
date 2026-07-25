@@ -29,7 +29,7 @@ const projectSchema = new mongoose.Schema({
   description: String,
   liveLink: String,
   githubLink: String,
-  challenges: { type: String, default: null },
+  challenges: [String],
   futureImprovements: { type: String, default: null },
 }, { strict: false, timestamps: true, collection: 'projects' });
 
