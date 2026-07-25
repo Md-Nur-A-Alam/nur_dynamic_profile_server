@@ -5,7 +5,8 @@ const collectionNames = [
   'education', 'skills', 'experience', 'employmentCompensation', 'training',
   'publications', 'researchProfiles', 'onlineProfiles', 'competitiveAchievements',
   'honoursAndAwards', 'leadershipRoles', 'committeeParticipation', 'languages',
-  'contact', 'academicReferences', 'applications', 'images', 'documents', 'siteMeta'
+  'contact', 'academicReferences', 'applications', 'images', 'documents', 'siteMeta',
+  'currentWork'
 ];
 
 const PortfolioModels = {};
